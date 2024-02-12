@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\C-50285-Nardelli-Nancy-Web-Api.props" />
+</Project>

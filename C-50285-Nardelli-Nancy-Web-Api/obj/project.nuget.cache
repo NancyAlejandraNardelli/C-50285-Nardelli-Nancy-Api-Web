@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "JFu51H7V/gSVxsqnTmi0EMX9bH5QyKPpotFgobosIBXTxk4uO/IWY4rHLQJ8UEHubc23OfPiBbNUZ6ETKqHUwA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Mariale\\source\\repos\\C-50285-Nardelli-Nancy-Web-Api\\C-50285-Nardelli-Nancy-Web-Api\\C-50285-Nardelli-Nancy-Web-Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
