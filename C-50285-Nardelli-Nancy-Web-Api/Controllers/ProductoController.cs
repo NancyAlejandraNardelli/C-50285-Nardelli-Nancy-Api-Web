@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using C_50285_Nardelli_Nancy_Web_Api.DTOs;
+using C_50285_Nardelli_Nancy_Web_Api.Infrastructure;
 using C_50285_Nardelli_Nancy_Web_Api.Models;
 using C_50285_Nardelli_Nancy_Web_Api.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
                 if (!ModelState.IsValid) { return BadRequest(ModelState); }
                 if (await _unitOfWork.ProductoRepositorio.Get(v => v.Descripciones.ToLower() == productoDTO.Descripciones.ToLower()) != null)
                 {
-                    ModelState.AddModelError("UsuarioExiste", "El usuario con ese nombre ya existe");
+                    ModelState.AddModelError("ProductoExiste", "El producto con esa descripción ya existe");
                     return BadRequest(ModelState);
                 }
 
@@ -48,7 +49,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
                 _response.Result = model;
                 _response.StatusCode = HttpStatusCode.Created;
 
-                return CreatedAtRoute("getUser", new { id = productoDTO.Id }, _response);
+                return CreatedAtRoute("GetProduct", new { id = productoDTO.Id }, _response);
 
             }
             catch (Exception ex)
@@ -60,6 +61,20 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
             }
             return _response;
 
+        }
+
+        [HttpGet("id:int", Name = "GetProduct")]
+        [ProducesResponseType(typeof(ApiSuccessResponse<Producto>), 200)]
+        public async Task<IActionResult> GetById(int id)
+        {
+
+            var producto = await _unitOfWork.UsuarioRepositorio.GetById(id);
+            if (producto == null)
+            {
+                return NotFound(); // Devolver 404 si no se encuentra el usuario
+            }
+            var productoDto = _mapper.Map<ProductoDTO>(producto);
+            return ResponseFactory.CreateSuccessResponse(200, productoDto);
         }
     }
 }
