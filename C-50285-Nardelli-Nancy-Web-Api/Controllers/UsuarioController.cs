@@ -135,6 +135,15 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
             return Ok(_response);
 
         }
-
+     [HttpGet("/api/Usuario/{nombreUsuario}")]
+    public async Task<ActionResult<Usuario>> GetUsuarioPorNombre(string nombreUsuario)
+    {
+        var usuario = await _unitOfWork.UsuarioRepositorio.Get(u => u.NombreUsuario == nombreUsuario);
+        if (usuario == null)
+        {
+            return NotFound(); // Devolver 404 si no se encuentra el usuario
+        }
+        return usuario;
+    }
     }
 }
