@@ -1,4 +1,7 @@
+using C_50285_Nardelli_Nancy_Web_Api;
 using C_50285_Nardelli_Nancy_Web_Api.DataAccess;
+using C_50285_Nardelli_Nancy_Web_Api.Services.Interfaces;
+using C_50285_Nardelli_Nancy_Web_Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer("name=DefaultConection");
 });
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkService>();
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 var app = builder.Build();
 

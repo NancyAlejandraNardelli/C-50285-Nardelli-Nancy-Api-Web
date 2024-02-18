@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "up6HAMVi+9wa8sxYa1Wv2yQmKQVU6E95sO6I2BVvYXTbdyO7u6JLUvBCS9MZz867CE6UPfpFd8SYXZYhVLYdPw==",
+  "dgSpecHash": "6OA+yIGSof/u059P7LSBKr8RxXdGY/5vCj0qzSNam2mT1Fg1AMvnhgjFdhV43cXIW4izzHcn//vxqtDw3XbhYw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mariale\\source\\repos\\C-50285-Nardelli-Nancy-Web-Api\\C-50285-Nardelli-Nancy-Web-Api\\C-50285-Nardelli-Nancy-Web-Api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Mariale\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\Mariale\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\Mariale\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.26\\microsoft.entityframeworkcore.6.0.26.nupkg.sha512",
