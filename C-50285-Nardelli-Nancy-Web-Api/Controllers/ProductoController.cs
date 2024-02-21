@@ -76,5 +76,48 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
             var productoDto = _mapper.Map<ProductoDTO>(producto);
             return ResponseFactory.CreateSuccessResponse(200, productoDto);
         }
+
+        [HttpPut("/api/Producto/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update(int id, [FromBody] ProductoDTO updateDto)
+        {
+            if (updateDto == null || id != updateDto.Id)
+            {
+                _response.IsSucces = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                return BadRequest(_response);
+            }
+
+            Producto modelo = _mapper.Map<Producto>(updateDto);
+
+            await _unitOfWork.ProductoRepositorio.Update(modelo);
+            _response.StatusCode = HttpStatusCode.NoContent;
+
+            return Ok(_response);
+
+        }
+
+        [HttpDelete("/api/Producto/{id:int}")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var producto = await _unitOfWork.ProductoRepositorio.GetById(id);
+            if (producto == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSucces = false;
+                _response.ErrorMessages.Add($"Producto con ID: {id} no encontrado.");
+                return NotFound(_response);
+
+            }
+
+            await _unitOfWork.ProductoRepositorio.Delete(producto);
+            // Configurar ApiResponse para indicar éxito
+            _response.IsSucces = true;
+            return NoContent();
+        }
     }
 }

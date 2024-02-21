@@ -12,7 +12,15 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Repositories
         {
             _db = db;
         }
-       
+
+        public async Task<Producto> Update(Producto entity)
+        {
+
+            _db.Productos.Update(entity);
+            await _db.SaveChangesAsync();
+            return entity;
+        }
+
 
     }
 }

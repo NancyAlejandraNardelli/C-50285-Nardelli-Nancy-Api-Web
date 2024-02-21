@@ -135,15 +135,38 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
             return Ok(_response);
 
         }
-     [HttpGet("/api/Usuario/{nombreUsuario}")]
-    public async Task<ActionResult<Usuario>> GetUsuarioPorNombre(string nombreUsuario)
-    {
-        var usuario = await _unitOfWork.UsuarioRepositorio.Get(u => u.NombreUsuario == nombreUsuario);
-        if (usuario == null)
+
+        [HttpGet("/api/Usuario/{nombreUsuario}")]
+        public async Task<ActionResult<Usuario>> GetUsuarioPorNombre(string nombreUsuario)
         {
-            return NotFound(); // Devolver 404 si no se encuentra el usuario
+            var usuario = await _unitOfWork.UsuarioRepositorio.Get(u => u.NombreUsuario == nombreUsuario);
+            if (usuario == null)
+            {
+                return NotFound(); // Devolver 404 si no se encuentra el usuario
+            }
+            return usuario;
         }
-        return usuario;
-    }
+
+        [HttpDelete("/api/Usuario/{id:int}")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _unitOfWork.UsuarioRepositorio.GetById(id);
+            if (user == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSucces = false;
+                _response.ErrorMessages.Add($"Usuario con ID {id} no encontrado.");
+                return NotFound(_response);
+                //return NotFound($"Usuario con ID {id} no encontrado."); // Devolver 404 si no se encuentra el usuario
+               
+            }
+
+            await _unitOfWork.UsuarioRepositorio.Delete(user);
+            _response.IsSucces = true;
+            return NoContent();
+        }
     }
 }
