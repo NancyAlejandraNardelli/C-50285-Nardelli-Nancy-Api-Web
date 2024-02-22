@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace C_50285_Nardelli_Nancy_Web_Api.Models
 {
@@ -16,7 +17,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Models
         public decimal PrecioVenta { get; set; }
         public int Stock { get; set; }
         public int IdUsuario { get; set; }
-
+        
         public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
         public virtual ICollection<ProductoVendido> ProductoVendidos { get; set; }
     }

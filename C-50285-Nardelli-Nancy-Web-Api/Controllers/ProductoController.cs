@@ -3,6 +3,7 @@ using C_50285_Nardelli_Nancy_Web_Api.DTOs;
 using C_50285_Nardelli_Nancy_Web_Api.Infrastructure;
 using C_50285_Nardelli_Nancy_Web_Api.Models;
 using C_50285_Nardelli_Nancy_Web_Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -17,13 +18,16 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         protected readonly ApiResponse _response;
-        public ProductoController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ILogger<ProductoController> _logger;
+        public ProductoController(ILogger<ProductoController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _response = new();
+            _logger = logger;
 
         }
+
         [HttpPost("/api/Producto")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,7 +72,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
         public async Task<IActionResult> GetById(int id)
         {
 
-            var producto = await _unitOfWork.UsuarioRepositorio.GetById(id);
+            var producto = await _unitOfWork.ProductoRepositorio.GetById(id);
             if (producto == null)
             {
                 return NotFound(); // Devolver 404 si no se encuentra el usuario
@@ -118,6 +122,29 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
             // Configurar ApiResponse para indicar éxito
             _response.IsSucces = true;
             return NoContent();
+        }
+
+        [HttpGet("/api/Producto")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse>> GetNumeroVillas()
+        {
+            try
+            {
+                _logger.LogInformation("Obtener Productos");
+
+                IEnumerable<Producto> productoList = await _unitOfWork.ProductoRepositorio.GetAll(includeProperties: "IdUsuarioNavigation");
+
+                _response.Result = _mapper.Map<IEnumerable<ProductoDTO>>(productoList);
+                _response.StatusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSucces = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
         }
     }
 }

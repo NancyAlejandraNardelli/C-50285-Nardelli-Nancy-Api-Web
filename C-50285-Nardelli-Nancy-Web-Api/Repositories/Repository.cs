@@ -1,6 +1,7 @@
 ﻿using C_50285_Nardelli_Nancy_Web_Api.DataAccess;
 using C_50285_Nardelli_Nancy_Web_Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -46,6 +47,23 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Repositories
                 }
             }
 
+            return await query.ToListAsync();
+        }
+
+        public async Task<List<T>> ObtenerTodos(Expression<Func<T, bool>>? filtro = null, string? incluirPropiedades = null)
+        {
+            IQueryable<T> query = dbset;
+            if (filtro != null)
+            {
+                query = query.Where(filtro);
+            }
+            if (incluirPropiedades != null)  // "Villa,OtroModelo"
+            {
+                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(incluirProp);
+                }
+            }
             return await query.ToListAsync();
         }
 

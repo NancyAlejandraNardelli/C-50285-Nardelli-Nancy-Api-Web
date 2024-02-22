@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace C_50285_Nardelli_Nancy_Web_Api.Models
 {
@@ -10,7 +11,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Models
             Productos = new HashSet<Producto>();
             Venta = new HashSet<Ventum>();
         }
-
+        [Key]
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;
         public string Apellido { get; set; } = null!;
