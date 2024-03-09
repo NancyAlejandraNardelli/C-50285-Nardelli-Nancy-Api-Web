@@ -2,6 +2,7 @@
 using C_50285_Nardelli_Nancy_Web_Api.DTOs;
 using C_50285_Nardelli_Nancy_Web_Api.Models;
 using C_50285_Nardelli_Nancy_Web_Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace C_50285_Nardelli_Nancy_Web_Api.Repositories
 {
@@ -19,6 +20,13 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Repositories
             _db.Productos.Update(entity);
             await _db.SaveChangesAsync();
             return entity;
+        }
+
+        public async Task<List<Producto>> GetAllProductosConUsuario()
+        {
+            return await _db.Productos
+                .Include(p => p.IdUsuarioNavigation)
+                .ToListAsync();
         }
 
 

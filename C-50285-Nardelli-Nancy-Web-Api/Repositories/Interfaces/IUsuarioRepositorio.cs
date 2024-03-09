@@ -7,6 +7,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Repositories.Interfaces
     {
         public bool IsUsuarioUnico(string UserName);
         Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO);
+        Task<Usuario> LoginCoderhouse(LoginRequestDTO loginRequestDTO);
         Task<Usuario> Registrar(UsuarioCreateDTO usuarioCreateDTO);
         Task<Usuario> Update(Usuario entity);
     }

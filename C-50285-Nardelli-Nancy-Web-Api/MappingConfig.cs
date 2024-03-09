@@ -10,7 +10,10 @@ namespace C_50285_Nardelli_Nancy_Web_Api
         {
             CreateMap<Usuario, UsuarioCreateDTO>().ReverseMap();
             CreateMap<Usuario, UsuarioUpdateDTO>().ReverseMap();
+            CreateMap<Usuario, UsuarioDTO>().ReverseMap();
             CreateMap<Producto, ProductoDTO>().ReverseMap();
+            CreateMap<ProductoVendido, ProductoVendidoDTO>().ReverseMap();
+            CreateMap<Ventum, VentaDTO>().ReverseMap();
 
         }
     }

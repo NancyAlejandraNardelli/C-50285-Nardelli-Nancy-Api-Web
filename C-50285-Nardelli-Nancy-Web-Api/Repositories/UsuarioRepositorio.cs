@@ -1,4 +1,5 @@
-﻿using C_50285_Nardelli_Nancy_Web_Api.DataAccess;
+﻿using AutoMapper;
+using C_50285_Nardelli_Nancy_Web_Api.DataAccess;
 using C_50285_Nardelli_Nancy_Web_Api.DTOs;
 using C_50285_Nardelli_Nancy_Web_Api.Helpers;
 using C_50285_Nardelli_Nancy_Web_Api.Models;
@@ -14,10 +15,13 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Repositories
     {
         private readonly AppDbContext _db;
         private readonly TokenJwtHelper _tokenJwtHelper;
+        //private readonly IMapper _mapper;
+
         public UsuarioRepositorio(AppDbContext db, IConfiguration configuration) :base(db)
         {
             _db = db;
             _tokenJwtHelper = new TokenJwtHelper(configuration);
+            
         }
         public bool IsUsuarioUnico (string userName)
         {
@@ -68,7 +72,22 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Repositories
             return loginResponseDTO;
         }
 
-        public async Task<Usuario> Update(Usuario entity)
+        public async Task<Usuario> LoginCoderhouse(LoginRequestDTO loginRequestDTO)
+        {
+            var user = await _db.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario.ToLower() == loginRequestDTO.UserName.ToLower() &&
+                                                                    u.Contraseña == loginRequestDTO.Password);
+
+            if (user == null)
+            {
+                return null; // No se encontró el usuario
+            }
+
+            
+
+            return user;
+        }
+ 
+    public async Task<Usuario> Update(Usuario entity)
         {
            
             _db.Usuarios.Update(entity);

@@ -3,9 +3,8 @@ using C_50285_Nardelli_Nancy_Web_Api.Models;
 
 namespace C_50285_Nardelli_Nancy_Web_Api.Repositories.Interfaces
 {
-    public interface IProductoRepositorio
+    public interface IProductoVendidoRepositorio
     {
-        Task<Producto> Update(Producto entity);
-        Task<List<Producto>> GetAllProductosConUsuario();
+        Task<List<ProductoVendido>> GetProductosVendidosPorUsuario(int idUsuario);
     }
 }

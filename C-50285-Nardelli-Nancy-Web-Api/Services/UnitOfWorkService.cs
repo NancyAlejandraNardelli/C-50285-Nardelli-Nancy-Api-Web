@@ -10,6 +10,9 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Services
         private readonly IConfiguration _configuration;
         public UsuarioRepositorio UsuarioRepositorio { get; private set; }
         public ProductoRepositorio ProductoRepositorio { get; private set; }
+        public ProductoVendidoRepositorio ProductoVendidoRepositorio { get; private set; }
+
+        public VentaRepositorio VentaRepositorio { get; private set; }
 
         public UnitOfWorkService(AppDbContext context, IConfiguration configuration)
         {
@@ -17,6 +20,8 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Services
             _configuration = configuration;
             UsuarioRepositorio = new UsuarioRepositorio(_context, _configuration);
             ProductoRepositorio = new ProductoRepositorio(_context, _configuration);
+            ProductoVendidoRepositorio = new ProductoVendidoRepositorio(_context, _configuration);
+            VentaRepositorio = new VentaRepositorio(_context, _configuration);
         }
 
         public Task<int> Complete()

@@ -2,6 +2,7 @@
 using C_50285_Nardelli_Nancy_Web_Api.DTOs;
 using C_50285_Nardelli_Nancy_Web_Api.Infrastructure;
 using C_50285_Nardelli_Nancy_Web_Api.Models;
+using C_50285_Nardelli_Nancy_Web_Api.Repositories.Interfaces;
 using C_50285_Nardelli_Nancy_Web_Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,12 +20,15 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
         private readonly IMapper _mapper;
         protected readonly ApiResponse _response;
         private readonly ILogger<ProductoController> _logger;
+        //private readonly IProductoVendidoRepositorio _productoVendidoRepositorio;
+
         public ProductoController(ILogger<ProductoController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _response = new();
             _logger = logger;
+            //_productoVendidoRepositorio = productoVendidoRepositorio;
 
         }
 
@@ -126,7 +130,7 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
 
         [HttpGet("/api/Producto")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse>> GetNumeroVillas()
+        public async Task<ActionResult<ApiResponse>> GetProductos()
         {
             try
             {
@@ -146,5 +150,54 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Controllers
             }
             return _response;
         }
+
+        [HttpGet("/api/Productos")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Producto>>> GetAllProductosConUsuario()
+        {
+            try
+            {
+                _logger.LogInformation("Obteniendo todos los productos con usuario");
+
+                var productos = await _unitOfWork.ProductoRepositorio.GetAllProductosConUsuario();
+
+                return Ok(productos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al obtener los productos: {ex}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error interno del servidor");
+            }
+        }
+
+        [HttpGet("/api/Productos/{idUsuario:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<Producto>>> GetProductosByUserId(int idUsuario)
+        {
+            try
+            {
+                _logger.LogInformation($"Obteniendo todos los productos del usuario con ID: {idUsuario}");
+
+                var productos = await _unitOfWork.ProductoRepositorio.GetAll(p => p.IdUsuario == idUsuario);
+
+                if (productos == null || productos.Count == 0)
+                {
+                    _logger.LogInformation($"No se encontraron productos para el usuario con ID: {idUsuario}");
+                    return NotFound();
+                }
+
+                return Ok(productos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al obtener los productos del usuario con ID: {idUsuario}: {ex}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error interno del servidor");
+            }
+        }
+
+        
     }
+
 }
+

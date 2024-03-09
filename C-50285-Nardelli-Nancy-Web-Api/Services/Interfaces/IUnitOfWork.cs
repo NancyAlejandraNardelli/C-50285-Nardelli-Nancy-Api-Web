@@ -6,6 +6,8 @@ namespace C_50285_Nardelli_Nancy_Web_Api.Services.Interfaces
     {
         public UsuarioRepositorio UsuarioRepositorio { get; }
         public ProductoRepositorio ProductoRepositorio { get; }
+        public ProductoVendidoRepositorio ProductoVendidoRepositorio { get; }
+        public VentaRepositorio VentaRepositorio { get; }
 
         Task<int> Complete();
     }
